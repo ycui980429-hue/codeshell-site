@@ -10,6 +10,11 @@
 </head>
 <body>
 
+<!-- 鼠标驱动的背景层：粒子网格 + 跟手光斑。
+     pointer-events: none，绝不挡交互；reduced-motion / 触屏下不启动。 -->
+<canvas id="fx-bg" aria-hidden="true"></canvas>
+<div class="fx-spotlight" id="fx-spotlight" aria-hidden="true"></div>
+
 <header class="nav">
   <div class="nav-inner">
     <a class="brand" href="#top">
@@ -209,6 +214,7 @@
   </div>
 </footer>
 
+<script src="fx.js" defer></script>
 <script src="app.js"></script>
 </body>
 </html>

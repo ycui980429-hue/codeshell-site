@@ -338,3 +338,53 @@ code { font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace; }
   .dl-card:hover { transform: none; }
   .cursor { animation: none; opacity: 1; }
 }
+
+/* ============================================================
+   鼠标驱动的背景特效
+   ------------------------------------------------------------
+   两层：canvas 粒子网格（有物理：被光标推开后弹回）+ 跟手光斑。
+   都固定在视口、pointer-events: none，不参与布局也不拦点击。
+   ============================================================ */
+#fx-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  /* 与页面底色融合，粒子只在暗处微微发亮 */
+  mix-blend-mode: screen;
+}
+.fx-spotlight {
+  position: fixed;
+  top: 0; left: 0;
+  width: 760px; height: 760px;
+  margin: -380px 0 0 -380px;   /* 让 translate 的值就是光标中心点 */
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle,
+    rgba(240, 162, 75, .13) 0%,
+    rgba(240, 162, 75, .06) 34%,
+    rgba(240, 162, 75, 0) 66%);
+  will-change: transform;
+  opacity: 0;
+  transition: opacity .6s ease;
+}
+.fx-spotlight.on { opacity: 1; }
+
+/* 内容层压在背景特效之上 */
+.nav, main, .footer { position: relative; z-index: 1; }
+
+/* 卡片 / 终端 mock 的 3D 倾斜（由 fx.js 写入 transform） */
+.tilt {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform .18s cubic-bezier(.16, 1, .3, 1);
+}
+.tilt.leaving { transition: transform .5s cubic-bezier(.16, 1, .3, 1); }
+
+@media (prefers-reduced-motion: reduce), (hover: none) {
+  #fx-bg, .fx-spotlight { display: none; }
+  .tilt { transform: none !important; }
+}
