@@ -78,12 +78,10 @@
               <span class="kpi">磁盘 <em>41%</em></span>
               <span class="live">● LIVE</span>
             </div>
-            <pre class="shot-term"><span class="p">root@web-01:~#</span> systemctl status nginx
-<span class="g">● nginx.service - A high performance web server</span>
-   <span class="dim">Loaded:</span> loaded (/lib/systemd/system/nginx.service; enabled)
-   <span class="dim">Active:</span> <span class="g">active (running)</span> since Tue 06:11; 43 days ago
-<span class="p">root@web-01:~#</span> <span class="cursor"></span></pre>
-            <div class="shot-ai">
+            <!-- 终端演示：命令逐字敲入 → 输出逐行浮现 → AI 回应滑入。
+                 默认全部可见（无 JS / reduced-motion 时就是静态画面）。 -->
+            <pre class="shot-term" id="demo-term"><span class="p">root@web-01:~#</span> <span class="typed" id="typed">systemctl status nginx</span><span class="cursor" id="cursor"></span><span class="demo-lines" id="demo-lines"></span></pre>
+            <div class="shot-ai" id="shot-ai">
               <span class="ai-badge">AI 终端助手 · web-01</span>
               <p>内存 51%，无异常进程；nginx 运行 43 天未重启。需要我检查证书有效期吗？<span class="ai-wait">等待你确认 ↓</span></p>
             </div>
@@ -146,19 +144,19 @@
       <p class="section-sub">这不是「把 shell 交给大模型」的玩具，权限模型按生产服务器的标准设计。</p>
       <div class="sec-grid">
         <div class="sec-item">
-          <h4>逐条审批门</h4>
+          <h3>逐条审批门</h3>
           <p>确认模式下每个变更性调用都要你点头；自动模式放行普通操作，破坏性与高危泄露仍然拦下询问。后台任务与主任务同一口径，没有旁路。</p>
         </div>
         <div class="sec-item">
-          <h4>只读白名单</h4>
+          <h3>只读白名单</h3>
           <p>机器人与外部 MCP 的「只读命令」按命令 + 参数逐条校验：断网卡、改时钟、删日志、读进程环境变量这类写用法全部拒绝。</p>
         </div>
         <div class="sec-item">
-          <h4>本机优先</h4>
+          <h3>本机优先</h3>
           <p>资产凭据加密存储（AES-256，密钥文件 0600），对话与配置留在本机；不带遥测，不要求注册。</p>
         </div>
         <div class="sec-item">
-          <h4>回归防线</h4>
+          <h3>回归防线</h3>
           <p>AI 内核 340+ 项断言回归：审批门、守卫、哨兵协议、命令判定绕过面逐条钉住——每个修过的洞都有用例看着，不会修好又漏。</p>
         </div>
       </div>
